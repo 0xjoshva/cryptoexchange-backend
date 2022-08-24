@@ -28,72 +28,38 @@ router.get("/:id", (req, res) => {
         res.send(result);
       }
     );
-   
   } catch (error) {
     console.log(error);
     res.status(400).send(error);
   }
 });
 
-// adding a new user to the table
-router.post("/", (req, res) => {
-  // the below allows you to only need one const, but every input required is inside of the brackets
-  const { email, password, full_name, phone_number, join_date, user_type } =
-    req.body;
-  // OR
-  // the below requires you to add everything one by one
-  //   const email = req.body.email;
-  try {
-    con.query(
-      //When using the ${}, the content of con.query MUST be in the back tick
-      `INSERT INTO users (email,
-    password,
-    full_name, 
-    phone_number,
-    join_date, 
-    user_type) VALUES ("${email}", "${password}", "${full_name}", "${phone_number}", "${join_date}", "${user_type}")`,
-      (err, result) => {
-        if (err) throw err;
-        res.send("user successfully created");
-      }
-    );
-  } catch (error) {
-    console.log(error);
-    res.status(400).send(error);
-  }
-});
-
-// Delete one users
+// delete one user
 router.delete("/:id", (req, res) => {
   try {
     con.query(
-      `DELETE FROM users WHERE id = ${req.params.id}`,
+      `DELETE FROM users WHERE user_id ="${req.params.id}"`,
       (err, result) => {
         if (err) throw err;
-        res.send("Sucessfully deleted this user");
+        res.send(`user ${req.params.id} deleted`);
       }
     );
-    // res.send({ id: req.params.id });
   } catch (error) {
     console.log(error);
     res.status(400).send(error);
   }
 });
 
-//Update users
+//update user
 router.put("/:id", middleware, (req, res) => {
-  // the below allows you to only need one const, but every input required is inside of the brackets
   const { email, password, full_name, phone_number, join_date, user_type } =
     req.body;
 
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(password, salt);
-  // OR
-  // the below requires you to add everything one by one
-  //   const email = req.body.email;
+
   try {
     con.query(
-      //When using the ${}, the content of con.query MUST be in the back tick
       `UPDATE users set email="${email}", password="${hash}", full_name="${full_name}", phone_number="${phone_number}", join_date="${join_date}", user_type="${user_type}" WHERE id = "${req.params.id}"`,
       (err, result) => {
         if (err) throw err;
@@ -106,24 +72,22 @@ router.put("/:id", middleware, (req, res) => {
   }
 });
 
+//
 router.post("/register", (req, res) => {
   try {
     let sql = "INSERT INTO users SET ?";
-    const { full_name, email, password, phone_number, join_date, user_type } =
-      req.body;
+    const { user_name, password, email, age, address, phone_number } = req.body;
 
-    // The start of hashing / encryption
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
 
     let user = {
-      full_name,
-      email,
-      // We sending the hash value to be stored witin the table
+      user_name,
       password: hash,
+      email,
+      age,
+      address,
       phone_number,
-      join_date,
-      user_type,
     };
     con.query(sql, user, (err, result) => {
       if (err) throw err;
@@ -158,10 +122,11 @@ router.post("/login", (req, res) => {
           // The information the should be stored inside token
           const payload = {
             user: {
-              id: result[0].id,
+              user_id: result[0].user_id,
               full_name: result[0].full_name,
               email: result[0].email,
               user_type: result[0].user_type,
+              balance: result[0].balance,
             },
           };
           // Creating a token and setting expiry date
