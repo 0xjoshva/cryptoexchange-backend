@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const bcrypt = require("bcryptjs");
 const con = require("../database/dbConnection");
 const jwt = require("jsonwebtoken");
 const middleware = require("../middleware/auth");
+const bcrypt = require("bcryptjs");
 
 // getting all users and displaying to /users route
 router.get("/", (req, res) => {
