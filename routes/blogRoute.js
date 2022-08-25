@@ -19,7 +19,7 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   try {
     con.query(
-      `SELECT * FROM blog WHERE id = ${req.params.id}`,
+      `SELECT * FROM blogs WHERE blog_id = ${req.params.id}`,
       (err, result) => {
         if (err) throw err;
         res.send(result);
@@ -31,14 +31,14 @@ router.get("/:id", (req, res) => {
   }
 });
 
-// delete one user
+// delete one blog
 router.delete("/:id", (req, res) => {
   try {
     con.query(
-      `DELETE FROM users WHERE user_id ="${req.params.id}"`,
+      `DELETE FROM blogs WHERE blog_id ="${req.params.id}"`,
       (err, result) => {
         if (err) throw err;
-        res.send(`user ${req.params.id} deleted`);
+        res.send(`blog #${req.params.id} deleted`);
       }
     );
   } catch (error) {
@@ -49,15 +49,13 @@ router.delete("/:id", (req, res) => {
 
 //update user
 router.put("/:id", middleware, (req, res) => {
-  const { email, password, full_name, phone_number, join_date, user_type } =
+  const { title,	author,	blurb,	article,	category,	date,	image} =
     req.body;
-
-  const salt = bcrypt.genSaltSync(10);
-  const hash = bcrypt.hashSync(password, salt);
-
+  // realtime date when updated
+    const date_now = new Date().toLocaleDateString();
   try {
     con.query(
-      `UPDATE users set email="${email}", password="${hash}", full_name="${full_name}", phone_number="${phone_number}", join_date="${join_date}", user_type="${user_type}" WHERE id = "${req.params.id}"`,
+      `UPDATE blogs set title=${title}, author=${author}, blurb=${blurb}, article=${article}, category=${category}, date=${date_now}, image=${image} WHERE blog_id = "${req.params.id}"`, 
       (err, result) => {
         if (err) throw err;
         res.send("user successfully updated");
@@ -68,3 +66,22 @@ router.put("/:id", middleware, (req, res) => {
     res.status(400).send(error);
   }
 });
+
+  // add a new blog
+  router.post("/blogs", (req, res) => {
+    const { title, author, blurb, article, category, date, image } = req.body;
+    const date_now = new Date().toLocaleDateString();
+    try {
+      con.query(
+        `INSERT INTO products (
+            title, author, blurb, article, category, date, image) VALUES ( "${title}", "${author}", "${blurb}", "${article}", "${category}", "${date_now}", "${image}" )`,
+        (err, result) => {
+          if (err) throw err;
+          res.send("product successfully created");
+        }
+      );
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error);
+    }}
+ );

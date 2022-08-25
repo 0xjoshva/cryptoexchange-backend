@@ -15,6 +15,9 @@ app.get("/", (req, res) => {
 const userRoute = require("./routes/userRoute");
 app.use("/users", userRoute);
 
+const blogRoute = require("./routes/blogRoute");
+app.use("/blogs", blogRoute);
+
 app.listen(app.get("port"), () => {
   console.log(`Listening for calls on http://localhost:${app.get("port")}`);
   console.log("Press Ctrl+C to exit the server");

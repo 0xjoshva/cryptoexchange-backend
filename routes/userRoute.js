@@ -50,17 +50,16 @@ router.delete("/:id", (req, res) => {
   }
 });
 
-//update user
+//update user needs to be tested
 router.put("/:id", middleware, (req, res) => {
-  const { email, password, full_name, phone_number, join_date, user_type } =
-    req.body;
+  const { user_name, password, email, age, address, phone_number } = req.body;
 
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(password, salt);
 
   try {
     con.query(
-      `UPDATE users set email="${email}", password="${hash}", full_name="${full_name}", phone_number="${phone_number}", join_date="${join_date}", user_type="${user_type}" WHERE id = "${req.params.id}"`,
+      `UPDATE users set email="${email}", password="${hash}", user_name="${user_name}", phone_number="${phone_number}", address="${address}", age="${age}" WHERE id = "${req.params.id}"`,
       (err, result) => {
         if (err) throw err;
         res.send("user successfully updated");
@@ -72,7 +71,7 @@ router.put("/:id", middleware, (req, res) => {
   }
 });
 
-//
+//register
 router.post("/register", (req, res) => {
   try {
     let sql = "INSERT INTO users SET ?";
@@ -99,8 +98,7 @@ router.post("/register", (req, res) => {
   }
 });
 
-// Login
-// The Route where Decryption happens
+//login and decryption
 router.post("/login", (req, res) => {
   try {
     let sql = "SELECT * FROM users WHERE ?";
@@ -119,7 +117,7 @@ router.post("/login", (req, res) => {
         if (!isMatch) {
           res.send("Password incorrect");
         } else {
-          // The information the should be stored inside token
+          // information stored within auth token
           const payload = {
             user: {
               user_id: result[0].user_id,
@@ -129,7 +127,7 @@ router.post("/login", (req, res) => {
               balance: result[0].balance,
             },
           };
-          // Creating a token and setting expiry date
+          // creating a token and setting an expiry
           jwt.sign(
             payload,
             process.env.jwtSecret,
@@ -150,7 +148,7 @@ router.post("/login", (req, res) => {
   }
 });
 
-// Verify
+// verify
 router.get("/users/verify", (req, res) => {
   const token = req.header("x-auth-token");
   jwt.verify(token, process.env.jwtSecret, (error, decodedToken) => {
