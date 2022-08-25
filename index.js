@@ -13,9 +13,9 @@ app.get("/", (req, res) => {
 });
 
 const userRoute = require("./routes/userRoute");
-app.use("/users", userRoute);
+const blogRoute = require("./routes//blogRoute");
 
-const blogRoute = require("./routes/blogRoute");
+app.use("/users", userRoute);
 app.use("/blogs", blogRoute);
 
 app.listen(app.get("port"), () => {

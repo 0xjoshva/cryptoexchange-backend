@@ -1,19 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const con = require("../database/dbConnection");
-
-// getting all blogs
-router.get("/", (req, res) => {
-  try {
-    con.query("SELECT * FROM blogs", (err, result) => {
-      if (err) throw err;
-      res.json(result);
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(400).json(error);
-  }
-});
+const middleware = require("../middleware/auth");
++(
+  // getting all blogs
+  router.get("/", (req, res) => {
+    try {
+      con.query("SELECT * FROM blogs", (err, result) => {
+        if (err) throw err;
+        res.json(result);
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(400).json(error);
+    }
+  })
+);
 
 // gets a single blog with a matching id
 router.get("/:id", (req, res) => {
@@ -32,7 +34,7 @@ router.get("/:id", (req, res) => {
 });
 
 // delete one blog
-router.delete("/:id", (req, res) => {
+router.delete("/:id", middleware, (req, res) => {
   try {
     con.query(
       `DELETE FROM blogs WHERE blog_id ="${req.params.id}"`,
@@ -49,13 +51,12 @@ router.delete("/:id", (req, res) => {
 
 //update user
 router.put("/:id", middleware, (req, res) => {
-  const { title,	author,	blurb,	article,	category,	date,	image} =
-    req.body;
+  const { title, author, blurb, article, category, date, image } = req.body;
   // realtime date when updated
-    const date_now = new Date().toLocaleDateString();
+  const date_now = new Date().toLocaleDateString();
   try {
     con.query(
-      `UPDATE blogs set title=${title}, author=${author}, blurb=${blurb}, article=${article}, category=${category}, date=${date_now}, image=${image} WHERE blog_id = "${req.params.id}"`, 
+      `UPDATE blogs set title=${title}, author=${author}, blurb=${blurb}, article=${article}, category=${category}, date=${date_now}, image=${image} WHERE blog_id = "${req.params.id}"`,
       (err, result) => {
         if (err) throw err;
         res.send("user successfully updated");
@@ -67,21 +68,21 @@ router.put("/:id", middleware, (req, res) => {
   }
 });
 
-  // add a new blog
-  router.post("/blogs", (req, res) => {
-    const { title, author, blurb, article, category, date, image } = req.body;
-    const date_now = new Date().toLocaleDateString();
-    try {
-      con.query(
-        `INSERT INTO products (
-            title, author, blurb, article, category, date, image) VALUES ( "${title}", "${author}", "${blurb}", "${article}", "${category}", "${date_now}", "${image}" )`,
-        (err, result) => {
-          if (err) throw err;
-          res.send("product successfully created");
-        }
-      );
-    } catch (error) {
-      console.log(error);
-      res.status(400).send(error);
-    }}
- );
+// add a new blog
+router.post("/blogs", (req, res) => {
+  const { title, author, blurb, article, category, date, image } = req.body;
+  try {
+    con.query(
+      `INSERT INTO products (
+            title, author, blurb, article, category, date, image) VALUES ( "${title}", "${author}", "${blurb}", "${article}", "${category}", "${date}", "${image}" )`,
+      (err, result) => {
+        if (err) throw err;
+        res.send("product successfully created");
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error);
+  }
+});
+module.exports = router;
