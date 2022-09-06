@@ -21,7 +21,7 @@ const middleware = require("../middleware/auth");
 router.get("/:id", (req, res) => {
   try {
     con.query(
-      `SELECT * FROM blogs WHERE blog_id = ${req.params.id}`,
+      `SELECT * FROM blogs WHERE id = ${req.params.id}`,
       (err, result) => {
         if (err) throw err;
         res.send(result);
