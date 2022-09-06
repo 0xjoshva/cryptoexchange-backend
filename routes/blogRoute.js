@@ -37,7 +37,7 @@ router.get("/:id", (req, res) => {
 router.delete("/:id", middleware, (req, res) => {
   try {
     con.query(
-      `DELETE FROM blogs WHERE blog_id ="${req.params.id}"`,
+      `DELETE FROM blogs WHERE id ="${req.params.id}"`,
       (err, result) => {
         if (err) throw err;
         res.send(`blog #${req.params.id} deleted`);
