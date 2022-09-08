@@ -85,6 +85,7 @@ router.post("/register", (req, res) => {
       password: hash,
       email,
       phone_number,
+      image: "",
     };
     con.query(sql, user, (err, result) => {
       if (err) throw err;
