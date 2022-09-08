@@ -119,7 +119,7 @@ router.post("/login", (req, res) => {
           const payload = {
             user: {
               user_id: result[0].user_id,
-              full_name: result[0].full_name,
+              user_name: result[0].user_name,
               email: result[0].email,
               user_type: result[0].user_type,
               balance: result[0].balance,
