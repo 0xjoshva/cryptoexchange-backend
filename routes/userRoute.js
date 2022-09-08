@@ -123,6 +123,7 @@ router.post("/login", (req, res) => {
               email: result[0].email,
               user_type: result[0].user_type,
               balance: result[0].balance,
+              image: result[0].image,
             },
           };
           // creating a token and setting an expiry
