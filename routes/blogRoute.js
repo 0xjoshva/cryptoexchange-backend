@@ -69,7 +69,7 @@ router.put("/:id", middleware, (req, res) => {
 });
 
 // add a new blog
-router.post("/blogs", (req, res) => {
+router.post("/add", (req, res) => {
   const { title, author, blurb, article, category, date, image } = req.body;
   try {
     con.query(
