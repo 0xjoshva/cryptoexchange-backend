@@ -2,14 +2,13 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
-app.set("port", process.env.PORT || 3000);
+app.set("port", process.env.PORT || 1337);
 app.use(express.json());
 app.use(cors());
+app.use(express.static("public"));
 
-app.get("/", (req, res) => {
-  res.json({
-    msg: "welcome to my database homepage",
-  });
+app.get("/", function (req, res) {
+  res.sendFile(__dirname + "/" + "index.html");
 });
 
 const userRoute = require("./routes/userRoute");
