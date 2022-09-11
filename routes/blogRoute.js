@@ -49,7 +49,7 @@ router.delete("/:id", middleware, (req, res) => {
   }
 });
 
-//update user
+//update blog
 router.put("/:id", middleware, (req, res) => {
   const { title, author, blurb, article, category, date, image } = req.body;
   // realtime date when updated
@@ -59,7 +59,7 @@ router.put("/:id", middleware, (req, res) => {
       `UPDATE blogs set title=${title}, author=${author}, blurb=${blurb}, article=${article}, category=${category}, date=${date_now}, image=${image} WHERE blog_id = "${req.params.id}"`,
       (err, result) => {
         if (err) throw err;
-        res.send("user successfully updated");
+        res.send("blog successfully updated");
       }
     );
   } catch (error) {
@@ -73,11 +73,11 @@ router.post("/blogs", (req, res) => {
   const { title, author, blurb, article, category, date, image } = req.body;
   try {
     con.query(
-      `INSERT INTO products (
+      `INSERT INTO blogs (
             title, author, blurb, article, category, date, image) VALUES ( "${title}", "${author}", "${blurb}", "${article}", "${category}", "${date}", "${image}" )`,
       (err, result) => {
         if (err) throw err;
-        res.send("product successfully created");
+        res.send("blog successfully created");
       }
     );
   } catch (error) {

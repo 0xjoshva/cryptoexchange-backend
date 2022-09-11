@@ -75,7 +75,7 @@ router.put("/:id", middleware, (req, res) => {
 router.post("/register", (req, res) => {
   try {
     let sql = "INSERT INTO users SET ?";
-    const { user_name, password, email, age, address, phone_number } = req.body;
+    const { user_name, password, email, phone_number } = req.body;
 
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);

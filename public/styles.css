@@ -1,0 +1,89 @@
+/* CSS RESET */
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  font-family: "Segoe UI";
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ol,
+ul {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+body {
+  background: #192185;
+  width: 100%;
+}
+ol,
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+
+
+table {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: fit-content;
+  margin-top: 1rem;
+  margin-left: 2rem;
+  background-color: white;
+  border-radius: 10px;
+}
+
+ td, th {
+  padding: 8px;
+}
+
+ tr:nth-child(even){background-color: #3e71a01f;}
+
+ tr:hover {background-color: #3e71a01f;}
+
+ th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #0084ff;
+  color: white;
+  border-right: 1px solid white;
+}
+body{
+    background: #192185;
+    padding: 2rem;
+}
+th:nth-child(3){
+border-top-right-radius: 10px;
+border-right: none;
+}
+th:nth-child(1){
+border-top-left-radius: 10px;
+}
+h1{
+ margin-top: 2rem;
+    margin-left: 2rem;
+    line-height: 1rem;
+    color: white;
+    font-family: "Segoe UI";
+    font-weight: 500;
+}

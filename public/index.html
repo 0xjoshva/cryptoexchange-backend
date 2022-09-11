@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="styles.css" rel="stylesheet" />
+    <title>cryptoexchange - routes</title>
+  </head>
+  <body>
+    <h1>Users</h1>
+    <table>
+      <tr>
+        <th>URL</th>
+        <th>Request Method</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>/users</td>
+        <td>GET</td>
+        <td>Gets all users</td>
+      </tr>
+      <tr>
+        <td>/users/:id</td>
+        <td>GET</td>
+        <td>Gets user with matching ID</td>
+      </tr>
+      <tr>
+        <td>/users/:id</td>
+        <td>DELETE</td>
+        <td>Deletes user with a matching ID</td>
+      </tr>
+      <tr>
+        <td>/users/:id</td>
+        <td>PUT</td>
+        <td>Updates user with matching ID</td>
+      </tr>
+      <tr>
+        <td>/users/register</td>
+        <td>POST</td>
+        <td>Inserts new user to table and encrypts password</td>
+      </tr>
+      <tr>
+        <td>/users/login</td>
+        <td>POST</td>
+        <td>
+          Decrypts password and checks table for matching email and password
+          credentials
+        </td>
+      </tr>
+    </table>
+    <h1>Blogs</h1>
+    <table>
+      <tr>
+        <th>URL</th>
+        <th>Request Method</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>/blogs</td>
+        <td>GET</td>
+        <td>Gets all blogs</td>
+      </tr>
+      <tr>
+        <td>/blogs</td>
+        <td>POST</td>
+        <td>Add new blog</td>
+      </tr>
+      <tr>
+        <td>/blogs/:id</td>
+        <td>GET</td>
+        <td>Gets blog with matching ID</td>
+      </tr>
+      <tr>
+        <td>/blogs/:id</td>
+        <td>DELETE</td>
+        <td>Deletes blog with matching ID</td>
+      </tr>
+      <tr>
+        <td>/blogs/:id</td>
+        <td>PUT</td>
+        <td>Updates blog with matching ID</td>
+      </tr>
+    </table>
+    <h1>Products</h1>
+    <table>
+      <tr>
+        <th>URL</th>
+        <th>Request Method</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>/cryptos</td>
+        <td>GET</td>
+        <td>Gets all cryptos</td>
+      </tr>
+      <tr>
+        <td>/cryptos/:id</td>
+        <td>GET</td>
+        <td>Gets crypto with matching ID</td>
+      </tr>
+    </table>
+    <h1>Transactions</h1>
+    <table>
+        <tr>
+        <th>URL</th>
+        <th>Request Method</th>
+        <th>Description</th>
+        </tr>
+        <tr>
+            <td>/transactions</td>
+            <td>GET</td>
+            <td>Gets all transactions</td>
+        </tr>
+        <tr>
+            <td>/transactions/:id</td>
+            <td>GET</td>
+            <td>Gets all transactions with matching user ID</td>
+        </tr>
+    </table>
+  </body>
+</html>

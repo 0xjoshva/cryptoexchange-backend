@@ -15,6 +15,7 @@ router.get("/", (req, res) => {
   }
 });
 
+//get single crypto
 router.get("/:id", (req, res) => {
   try {
     con.query(

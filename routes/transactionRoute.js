@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const con = require("../database/dbConnection");
-const middleware = require("../middleware/auth");
 
 // get all transactions
 router.get("/", (req, res) => {
